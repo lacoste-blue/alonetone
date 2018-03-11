@@ -31,8 +31,8 @@ RSpec.describe AssetsController, type: :controller do
 
   context "#show.mp3" do
     subject do
-      request.env["HTTP_ACCEPT"] = "audio/mpeg"
-      get :show, params: {id: 'song1', user_id: users(:sudara).login, format: :mp3}
+      request.headers["HTTP_ACCEPT"] = "audio/mpeg"
+      get :show, params: { id: 'song1', user_id: users(:sudara).login, format: :mp3 }
     end
 
     GOOD_USER_AGENTS = [
@@ -55,7 +55,7 @@ RSpec.describe AssetsController, type: :controller do
 
     GOOD_USER_AGENTS.each do |agent|
       it "should register a listen for #{agent}" do
-        request.user_agent = agent
+        request.headers["User-Agent"] = agent
         expect{ subject }.to change{ Listen.count }.by(1)
       end
     end
@@ -77,21 +77,20 @@ RSpec.describe AssetsController, type: :controller do
       end.to change{ Listen.count }.by(1)
     end
 
-    it "rails_helper" do
+    it "should register mulitple listens when they are spaced" do
       request.user_agent = GOOD_USER_AGENTS.first
       expect do
-        request.env["HTTP_ACCEPT"] = "audio/mpeg"
-        Timecop.travel(3.hours.ago) do
+        request.headers["HTTP_ACCEPT"] = "audio/mpeg"
+        travel_to(3.hours.ago) do
           get :show, :params => {:id => 'song1', :user_id => users(:sudara).login, :format => :mp3}
         end
-        Timecop.travel(2.hours.ago) do
+        travel_to(2.hours.ago) do
           get :show, :params => {:id => 'song1', :user_id => users(:sudara).login, :format => :mp3}
         end
-        Timecop.travel(1.hour.ago) do
+        travel_to(1.hour.ago) do
           get :show, :params => {:id => 'song1', :user_id => users(:sudara).login, :format => :mp3}
         end
-      end.to change{Listen.count}.by(3)
-      Timecop.return
+      end.to change{ Listen.count }.by(3)
     end
 
     it 'should accept a mp3 extension and redirect to the amazon url' do

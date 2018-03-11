@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.2.0.beta2'
+gem 'rails', '5.2.0.rc1'
 gem 'mysql2'
 
 gem 'thredded'
@@ -84,7 +84,6 @@ end
 group :test do
   gem 'rspec-rails', :require => false
   gem 'rspec-mocks', :require => false
-  gem 'timecop', :require => false
   gem 'guard-rspec', :require => false
   gem 'database_cleaner', :require => false
   gem 'rb-fsevent', :require => false

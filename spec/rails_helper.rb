@@ -4,7 +4,6 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'database_cleaner'
-require 'timecop'
 require 'authlogic/test_case'
 require 'factory_bot_rails'
 
@@ -31,6 +30,7 @@ RSpec.configure do |config|
   config.include Authlogic::TestCase
   config.include RSpec::Support::Logging
   config.include RSpec::Support::LittleHelpers
+  config.include ActiveSupport::Testing::TimeHelpers
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
