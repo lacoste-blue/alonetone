@@ -9,7 +9,8 @@ pipeline {
     stage('Prep') {
       steps {
         sh '''gem install bundler
-bundle install'''
+bundle install
+'''
         catchError() {
           sh 'docker kill $(docker ps -q)'
         }
@@ -44,6 +45,7 @@ bundle install'''
           steps {
             catchError() {
               sh '''#docker run -dt -e POSTGRES_DB=metasploit_framework_test -p 5432:5432 postgres:9
+bin/rails db:migrate RAILS_ENV=test
 bundle exec rspec'''
             }
             
