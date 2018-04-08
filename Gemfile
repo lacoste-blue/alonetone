@@ -97,4 +97,9 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'rubycritic'
+  gem 'rubocop'
+  gem 'mutant'
+  gem 'mutant-rspec'
+  gem 'rspec_yah_formatter'
 end
