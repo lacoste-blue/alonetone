@@ -101,5 +101,4 @@ group :development, :test do
   gem 'rubocop'
   gem 'mutant'
   gem 'mutant-rspec'
-  gem 'rspec_yah_formatter'
 end
