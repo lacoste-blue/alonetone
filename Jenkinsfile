@@ -44,8 +44,7 @@ bundle install
         stage('Unit') {
           steps {
             catchError() {
-              sh '''#docker run -dt -e POSTGRES_DB=metasploit_framework_test -p 5432:5432 postgres:9
-bin/rails db:migrate RAILS_ENV=test
+              sh '''RAILS_ENV=test bundle exec rake db:migrate
 bundle exec rspec'''
             }
             
